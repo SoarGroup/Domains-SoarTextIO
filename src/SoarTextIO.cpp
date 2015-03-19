@@ -266,7 +266,7 @@ SoarTextIO::WriteCycle(istream* getFrom)
 	word = "", forMem = "";
 	checker = "";
 	while(!printNow) { sml::Sleep(0,1); }
-	if(*getFrom == cin)
+	if(getFrom == &cin)
 	{
 		if(print_hack != 2)
 			cout << endl << endl << endl << endl << endl << "> ";
@@ -391,7 +391,7 @@ SoarTextIO::CarryOutCommand(istream* getFrom)
 	}
 	if(checker != "--STEP" && checker != "--CLEAR" && checker != "--RESET" && checker != "--REMOTE" && checker != "--CMDLIN" && checker != "--DEBUG" && checker != "--RUN" && checker != "--SAVE" && checker != "--LOAD" && !loadPlease && checker != "--EXIT" && checker != "--QUIT" && checker != "--STOP")
 	{
-		if(getFrom != cin)
+		if(getFrom != &cin)
 		{
 			wordNum--;
 		}
@@ -406,7 +406,7 @@ SoarTextIO::CarryOutCommand(istream* getFrom)
 	char garbage;
 	if(checker != "--CMDLIN")
 		getFrom->get(garbage);
-	if(*getFrom != cin && getFrom->peek() == '\n')
+	if(getFrom != &cin && getFrom->peek() == '\n')
 	{
 		while(isspace(getFrom->peek()))
 		{
@@ -763,7 +763,7 @@ SoarTextIO::loadMem()
 void
 SoarTextIO::ResetConnect()
 {
-	pKernel = sml::Kernel::CreateKernelInNewThread("SoarKernelSML");
+	pKernel = sml::Kernel::CreateKernelInNewThread();
 	if (pKernel->HadError())
 	{
 		cout << pKernel->GetLastErrorDescription() << endl;
